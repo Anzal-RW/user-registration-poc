@@ -1,0 +1,9 @@
+- **Added custom user model with fields**
+    - email (required for both)
+    - mobile (optional for admin)
+    - first name (optional for admin)
+    - last name (optional for admin)
+    - mobile otp (optional for admin)
+- **Added custom user admin**
+- **Added user register serializer**
+- **Added user register view**
