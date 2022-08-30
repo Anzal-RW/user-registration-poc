@@ -1,3 +1,4 @@
+from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
@@ -34,7 +35,7 @@ class CustomUserManager(BaseUserManager):
             country=country, **extra_fields
             )
         user.set_unusable_password()
-        user.save()
+        user.save(using=self._db)
         return user
 
 
@@ -56,7 +57,7 @@ class CustomUserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
-        user.save()
+        user.save(using=self._db)
         return user
 
 
@@ -67,12 +68,13 @@ class User(AbstractUser):
     first_name = models.CharField(_("first name"), max_length=100, null=True, blank=True)
     last_name = models.CharField(_("last name"), max_length=100, null=True, blank=True)
     country = models.CharField(_("country"), max_length=255, null=True, blank=True)
-    email_verified = models.BooleanField(_("email_verified"), default=False,
+    mobile_otp = models.PositiveIntegerField(_("mobile otp"), max_length=6,  null=True, blank=True)
+    email_verified = models.BooleanField(_("email verified"), default=False,
     help_text=_(
             "Designates whether this users email is verified. "
         )
     )
-    mobile_verified = models.BooleanField(_("mobile_verified"), default=False,
+    mobile_verified = models.BooleanField(_("mobile verified"), default=False,
     help_text=_(
             "Designates whether this users mobile is verified. "
         )
