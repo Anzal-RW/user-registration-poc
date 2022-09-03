@@ -12,14 +12,14 @@ class CustomUserAdmin(UserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('email', 'mobile', 'first_name')
+    list_display = ('first_name', 'email', 'mobile')
     list_filter = ('email_verified', 'mobile_verified', 'country')
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {
             'fields': ('first_name', 'last_name', 'mobile', 'country')}
         ),
-        ('Verification', {'fields': ('mobile_otp', 'email_verified', 'mobile_verified')}),
+        ('Verification', {'fields': ('mobile_otp', 'otp_generated_at', 'email_verified', 'mobile_verified')}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.

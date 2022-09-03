@@ -1,9 +1,12 @@
+### Following requirements are added in this branch:
 - **Added custom user model with fields**
     - email (required for both)
     - mobile (optional for admin)
     - first name (optional for admin)
     - last name (optional for admin)
+    - country
     - mobile otp (optional for admin)
+    - otp_generated_at
 - **Added custom user admin**
 - **Added user register serializer**
 - **Added user register view**

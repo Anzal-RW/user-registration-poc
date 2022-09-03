@@ -1,7 +1,8 @@
-from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
+from django.core.validators import RegexValidator
+from django.utils import timezone
 
 
 class CustomUserManager(BaseUserManager):
@@ -62,13 +63,20 @@ class CustomUserManager(BaseUserManager):
 
 
 class User(AbstractUser):
+    mobile_regex_validator = RegexValidator(
+        regex=r'^\+\d{12,13}$',
+        message="Phone number must be entered in this format: '+919999999999'. Up to 13 digits allowed."
+        )
     username = None
     email = models.EmailField(_('email address'), unique=True)
-    mobile = models.CharField(_("mobile number"), max_length=10, unique=True, null=True, blank=True)
+    mobile = models.CharField(
+        validators=[mobile_regex_validator], max_length=16, unique=True, null=True, blank=True
+        )
     first_name = models.CharField(_("first name"), max_length=100, null=True, blank=True)
     last_name = models.CharField(_("last name"), max_length=100, null=True, blank=True)
     country = models.CharField(_("country"), max_length=255, null=True, blank=True)
-    mobile_otp = models.PositiveIntegerField(_("mobile otp"), max_length=6,  null=True, blank=True)
+    mobile_otp = models.CharField(_("mobile otp"), max_length=6,  null=True, blank=True)
+    otp_generated_at = models.DateTimeField(default=timezone.now)
     email_verified = models.BooleanField(_("email verified"), default=False,
     help_text=_(
             "Designates whether this users email is verified. "
@@ -86,4 +94,4 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['mobile', 'first_name', 'last_name', 'country']
     
     def __str__(self):
-        return self.email
+        return f'{self.first_name} {self.last_name}'

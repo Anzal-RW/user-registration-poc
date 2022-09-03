@@ -19,3 +19,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User(**validated_data)
         user.save()
         return user
+
+
+class MobileVerificationSerializer(serializers.ModelSerializer):
+    '''
+    Serializer for mobile number verification.
+    '''
+    class Meta:
+        model = User
+        fields = ('mobile', 'mobile_otp', 'otp_generated_at')
