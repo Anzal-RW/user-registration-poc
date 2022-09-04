@@ -10,3 +10,18 @@
 - **Added custom user admin**
 - **Added user register serializer**
 - **Added user register view**
+
+
+## auth branch
+
+- **Installed pyjwt**
+- **Created token encoder property in models.py**
+- **Created login serializer**
+- **Created custom user backend**
+- **Created login view**
+
+### Functionality
+
+- User can login with right credentials
+- Return Invalid credentials if wrong mobile number or otp given
+- Generated jwt token for logged in user

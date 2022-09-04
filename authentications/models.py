@@ -1,8 +1,13 @@
+from datetime import datetime, timedelta
+from lib2to3.pgen2 import token
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import RegexValidator
 from django.utils import timezone
+from datetime import datetime, timedelta
+import jwt
+from django.conf import settings
 
 
 class CustomUserManager(BaseUserManager):
@@ -95,3 +100,13 @@ class User(AbstractUser):
     
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+
+    @property
+    def token(self):
+        token = jwt.encode(
+            {
+                'id':self.id, 'email':self.email, 'exp':datetime.utcnow() + timedelta(hours=24)
+            },
+            settings.SECRET_KEY, algorithm='HS256'
+        )
+        return token

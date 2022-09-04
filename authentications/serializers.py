@@ -21,10 +21,10 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
-class MobileVerificationSerializer(serializers.ModelSerializer):
-    '''
-    Serializer for mobile number verification.
-    '''
+class LoginSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = User
-        fields = ('mobile', 'mobile_otp', 'otp_generated_at')
+        fields = ('mobile', 'mobile_otp', 'token')
+
+        read_only_fields = ['token']
