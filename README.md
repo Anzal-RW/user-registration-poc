@@ -25,3 +25,5 @@
 - User can login with right credentials
 - Return Invalid credentials if wrong mobile number or otp given
 - Generated jwt token for logged in user
+- Added login otp expiry check
+- Set otp expiry time to 5 minutes

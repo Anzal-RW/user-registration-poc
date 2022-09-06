@@ -7,7 +7,6 @@ class CustomUserBackend(BaseBackend):
         try:
             user = User.objects.get(Q(email__iexact=username) | Q(mobile__iexact=username))
             if request.data.get('mobile_otp'):
-                print(request.data.get('mobile_otp'), user.mobile_otp)
                 if request.data.get('mobile_otp') == user.mobile_otp:
                     return user
             return None
